@@ -1,3 +1,4 @@
+import consts.Variables;
 import service.SortService;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -8,26 +9,31 @@ public class Main {
 
     public static void main(String[] args) {
 
-        SortService sorter = new SortService();
-
-        int[] arr = new int[10];
-
         Random random = new Random();
 
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = random.nextInt(10);
-        }
+        int[] arr = random.ints(10, -100, 100).toArray();
 
-        System.out.print("Starter array: ");
-        Arrays.stream(arr).forEach(el -> System.out.print(el + " "));
+        String output = "Starter array: " + Arrays.toString(arr);
+
+        Variables.writer.write("\n\n___Started date and time: " + LocalDateTime.now() + "___\n");
+        Variables.writer.write(output);
+        System.out.println(output);
+
+        if(Variables.IS_FOR_DISCOVER_HOW_TO_USING_THREADS) System.out.print("\n");
 
         LocalDateTime start = LocalDateTime.now();
-        sorter.sort(arr, arr.length);
+        new SortService(arr);
         LocalDateTime finish = LocalDateTime.now();
 
-        System.out.print("\nSorted array: ");
-        Arrays.stream(arr).forEach(el -> System.out.print(" " + el) );
-        System.out.print("\nTime executing: " + ChronoUnit.MILLIS.between(start, finish));
+        output = "Sorted array: " + Arrays.toString(arr);
+
+        Variables.writer.write(output);
+        System.out.print(output);
+
+        output = "\nTime executing: " + ChronoUnit.MILLIS.between(start, finish) + "ms";
+
+        Variables.writer.write(output);
+        System.out.print(output);
     }
 
 }

@@ -1,23 +1,48 @@
 package service;
 
+import consts.Variables;
+
 import java.util.Arrays;
 
-public class SortService {
+public class SortService extends Thread{
 
-    public void sort(
-            int[] arr,
-            int length
-    ) {
+    private final int[] arr;
+
+    public SortService(int[] arr) {
+
+        this.arr = arr;
+        if(Variables.IS_FOR_DISCOVER_HOW_TO_USING_THREADS){
+
+            try {
+                sleep(Variables.SORT_THREAD_PAUSE);
+            } catch (InterruptedException e) {
+                Variables.logger.warning(e.getMessage());
+            }
+
+            Variables.writer.write(getName() + " - started -" + Arrays.toString(this.arr));
+            System.out.println(getName() + " - started -" + Arrays.toString(this.arr));
+        }
+        this.run();
+    }
+
+    @Override
+    public void run() {
+        sort();
+    }
+
+    public void sort() {
+
+        int length = this.arr.length;
 
         if (length < 2) return;
 
         int mid = length / 2;
 
-        int[] leftPart = Arrays.copyOf(arr, mid);
-        int[] rightPart = Arrays.copyOfRange(arr, mid, length);
+        int[] leftPart = Arrays.copyOf(this.arr, mid);
+        int[] rightPart = Arrays.copyOfRange(this.arr, mid, length);
 
-        sort(leftPart, mid);
-        sort(rightPart, length - mid);
+        new SortService(leftPart);
+        new SortService(rightPart);
 
         merge(arr, leftPart, rightPart, mid, length - mid);
     }
@@ -46,4 +71,5 @@ public class SortService {
             arr[arrIndex++] = right[rightIndex++];
         }
     }
+
 }
