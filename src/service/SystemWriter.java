@@ -1,32 +1,36 @@
 package service;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import consts.Variables;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class SystemWriter {
 
-    private BufferedWriter writer;
-    private String filepath;
-    private SystemLogger logger;
+    private final String filepath;
 
     public SystemWriter(
-            String filepath,
-            SystemLogger logger
+            String filepath
     ) {
+
+        try {
+            Files.createDirectories(Paths.get("storage/app/"));
+        } catch (IOException e) {
+            Variables.logger.warning(e.getMessage());
+        }
+
         this.filepath = filepath;
-        this.logger = logger;
     }
 
     public void write(String message) {
         try {
-            this.writer = new BufferedWriter(new FileWriter(filepath, true));
-            this.writer.write(message);
-            this.writer.newLine();
-            this.writer.close();
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filepath, true));
+            writer.write(message);
+            writer.newLine();
+            writer.close();
         } catch (Throwable e) {
-            this.logger.warning(e.getMessage());
+            Variables.logger.warning(e.getMessage());
         }
     }
 }

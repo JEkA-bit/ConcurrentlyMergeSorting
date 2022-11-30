@@ -1,6 +1,8 @@
 package service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.logging.*;
 
@@ -14,12 +16,20 @@ public class SystemLogger{
         SimpleFormatter formatter = new SimpleFormatter();
 
         try {
+            Files.createDirectories(Paths.get("storage/logs/"));
+        } catch (IOException e) {
+            this.warning(e.getMessage());
+        }
+
+        try {
             FileHandler file = new FileHandler("storage/logs/" + LocalDate.now() + ".log", true);
             file.setFormatter(formatter);
             logger.addHandler(file);
         } catch (IOException e) {
             this.warning(e.getMessage());
         }
+
+
     }
 
     public void write(Level level, String message) { this.logger.log(new LogRecord(level, message)); }
