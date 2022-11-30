@@ -7,6 +7,7 @@ import java.util.Arrays;
 public class SortService extends Thread{
 
     private final int[] arr;
+    private boolean isEnd = false;
 
     public SortService(int[] arr) {
 
@@ -22,7 +23,6 @@ public class SortService extends Thread{
             Variables.writer.write(getName() + " - started -" + Arrays.toString(this.arr));
             System.out.println(getName() + " - started -" + Arrays.toString(this.arr));
         }
-        this.run();
     }
 
     @Override
@@ -34,15 +34,22 @@ public class SortService extends Thread{
 
         int length = this.arr.length;
 
-        if (length < 2) return;
+        if (length < 2) {
+            return;
+        }
 
         int mid = length / 2;
 
         int[] leftPart = Arrays.copyOf(this.arr, mid);
         int[] rightPart = Arrays.copyOfRange(this.arr, mid, length);
 
-        new SortService(leftPart);
-        new SortService(rightPart);
+        SortService threadForLeft = new SortService(leftPart);
+        SortService threadForRight = new SortService(rightPart);
+
+        threadForLeft.start();
+        threadForRight.start();
+
+        while (threadForLeft.isAlive() || threadForRight.isAlive()) {}
 
         merge(arr, leftPart, rightPart, mid, length - mid);
     }

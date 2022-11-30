@@ -22,8 +22,17 @@ public class Main {
         if(Variables.IS_FOR_DISCOVER_HOW_TO_USING_THREADS) System.out.print("\n");
 
         LocalDateTime start = LocalDateTime.now();
-        new SortService(arr);
+        SortService thread = new SortService(arr);
+
+        thread.start();
+
         LocalDateTime finish = LocalDateTime.now();
+
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
         output = "Sorted array: " + Arrays.toString(arr);
 
