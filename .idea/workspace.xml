@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2f736dbc-7f17-456c-909c-f848fd077c44" name="Changes" comment="(TEST)Change Merge Sort logic from basic to threaded">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/consts/Variables.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/consts/Variables.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/SortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/SortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/SystemWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/SystemWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/storage/.gitignore" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +83,7 @@
       <workItem from="1669741073378" duration="856000" />
       <workItem from="1669755485877" duration="2554000" />
       <workItem from="1669794697572" duration="723000" />
+      <workItem from="1669795897062" duration="627000" />
     </task>
     <task id="LOCAL-00001" summary="Added gitignore and system services">
       <created>1669657175466</created>

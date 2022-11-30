@@ -1,27 +1,35 @@
 package service;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.logging.*;
 
 public class SystemLogger{
 
-    private Logger logger;
-    private FileHandler file;
-    private SimpleFormatter formatter;
+    private final Logger logger;
 
     public SystemLogger() {
 
         this.logger = Logger.getLogger(LocalDate.now().toString());
-        this.formatter = new SimpleFormatter();
+        SimpleFormatter formatter = new SimpleFormatter();
 
         try {
-            this.file = new FileHandler("storage/logs/" + LocalDate.now().toString() + ".log", true);
-            this.file.setFormatter(this.formatter);
-            logger.addHandler(this.file);
+            Files.createDirectories(Paths.get("storage/logs/"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            this.warning(e.getMessage());
         }
+
+        try {
+            FileHandler file = new FileHandler("storage/logs/" + LocalDate.now() + ".log", true);
+            file.setFormatter(formatter);
+            logger.addHandler(file);
+        } catch (IOException e) {
+            this.warning(e.getMessage());
+        }
+
+
     }
 
     public void write(Level level, String message) { this.logger.log(new LogRecord(level, message)); }
