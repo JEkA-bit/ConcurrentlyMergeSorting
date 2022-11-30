@@ -7,7 +7,6 @@ import java.util.Arrays;
 public class SortService extends Thread{
 
     private final int[] arr;
-    private boolean isEnd = false;
 
     public SortService(int[] arr) {
 
@@ -49,7 +48,12 @@ public class SortService extends Thread{
         threadForLeft.start();
         threadForRight.start();
 
-        while (threadForLeft.isAlive() || threadForRight.isAlive()) {}
+        try {
+            threadForLeft.join();
+            threadForRight.join();
+        } catch (InterruptedException e) {
+            Variables.logger.warning(e.getMessage());
+        }
 
         merge(arr, leftPart, rightPart, mid, length - mid);
     }
